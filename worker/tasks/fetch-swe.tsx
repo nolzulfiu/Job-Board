@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const fetchnode = require('node-fetch');
 const moment = require('moment');
 
 const redis = require("redis");
@@ -12,7 +12,7 @@ const before = moment().subtract(1, 'week').format('YYYY-MM-DDThh:mm:ss');
 
 const baseURL = `https://jobsearch.api.jobtechdev.se/search?published-after=${before}&q=developer&limit=100&sort=pubdate-desc`;
 
-async function fetchSwe() {
+async function FetchSwe() {
 
     const allJobs= [];
 
@@ -24,18 +24,16 @@ async function fetchSwe() {
 
 
     //fetch all pages
-    const res = await fetch(baseURL, head);
+    const res = await fetchnode(baseURL, head);
     const jobs = await res.json();
     console.log({jobs});
     if(jobs.message == 'Internal Server Error' || jobs.total.value == 0) {
         
     } else {
         allJobs.push(...jobs.hits);
-    
-        resultCount = allJobs.length;
-        console.log('got ', resultCount, 'jobs');
-    
-        
+
+        console.log('got ', allJobs.length, 'jobs');
+            
         //set in jobs
         const success = await setAsync('swe', JSON.stringify(allJobs));
     
@@ -44,6 +42,6 @@ async function fetchSwe() {
 
 }
 
-module.exports = fetchSwe;
+module.exports = FetchSwe;
 
-fetchSwe();
+FetchSwe();

@@ -1,13 +1,13 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.min.css';
+import './App.css';
 
 
 import Jobs from './Jobs'
 
 const JOB_API_URL = 'http://localhost:3001/jobs';
 
-async function fetchJobs (updateCb) {
+async function fetchJobs (updateCb : any) {
   const res = await fetch(JOB_API_URL);
   const json = await res.json();
 

@@ -5,11 +5,7 @@ import { Icon } from "@blueprintjs/core";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide} from '@material-ui/core';
 
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
-
-  export default function JobModal({job, open, handleClose}) {  
+  export default function JobModal({job, open, handleClose} : any) {  
     
     if (!job.occupation.label) {
         return <div />
@@ -52,7 +48,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
       <div>
         <Dialog
           open={open}
-          TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
           aria-labelledby="alert-dialog-slide-title"

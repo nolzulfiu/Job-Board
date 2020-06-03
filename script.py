@@ -6,9 +6,9 @@ def print_time( threadName):
     if threadName == 'redis':
         os.system("redis-server")
     elif threadName == 'api':
-        os.system("node api/index.js")
+        os.system("node api/index.tsx")
     elif threadName == 'worker':
-        os.system("node worker/index.js")
+        os.system("node worker/index.tsx")
     elif threadName == 'client':
         os.system("cd client & cd src & npm start")
 

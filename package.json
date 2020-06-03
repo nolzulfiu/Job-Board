@@ -1,5 +1,5 @@
 {
-  "name": "Job-Board",
+  "name": "job-board",
   "homepage": "http://jobs.nolzulfiu.com",
   "version": "1.0.0",
   "description": "",
@@ -13,6 +13,8 @@
   "dependencies": {
     "@blueprintjs/core": "^3.26.1",
     "@material-ui/icons": "^4.9.1",
+    "@types/node": "^14.0.9",
+    "@types/react": "^16.9.35",
     "acorn": "^7.1.1",
     "cron": "^1.8.2",
     "express": "^4.17.1",
@@ -22,6 +24,7 @@
     "react-bootstrap": "^1.0.1",
     "react-router-dom": "^5.2.0",
     "redis": "^3.0.2",
+    "typescript": "^3.9.3",
     "whatwg-fetch": "^2.0.4"
   }
 }

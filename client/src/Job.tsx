@@ -8,7 +8,7 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 
 const moment = require('moment');
 
-export default function Job({job, onClick}) { 
+export default function Job({job, onClick} : any) { 
     
     let publishDate = moment(job.publication_date, 'YYYY-MM-DDThh-mm-ss').fromNow();
 

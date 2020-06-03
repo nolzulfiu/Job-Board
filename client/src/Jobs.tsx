@@ -13,7 +13,7 @@ import {Dropdown, DropdownButton, Nav, Navbar} from 'react-bootstrap';
 
 const moment = require('moment');
 
-export default function Jobs({jobs}) {
+export default function Jobs({jobs} : any) {
 
     //modal
     const [open, setOpen] = useState(false);
@@ -138,7 +138,7 @@ export default function Jobs({jobs}) {
         setClearFilterButton(true);
     }
 
-    function changeRegionFilter(reg) {
+    function changeRegionFilter(reg : string) {
         clearRegion();
         setRegion(reg);
         setRegionButton('primary');
@@ -166,17 +166,17 @@ export default function Jobs({jobs}) {
 
     let jobsObj = jobs;
 
-    jobsObj = (region !== '') ? jobsObj.filter(item => item.workplace_address.region === region) : jobsObj;
-    jobsObj = (driverReq) ? jobsObj.filter(item => item.driving_license_required === true) : jobsObj;
-    jobsObj = (driverNReq) ? jobsObj.filter(item => item.driving_license_required === false) : jobsObj;
-    jobsObj = (fullTime) ? jobsObj.filter(item => item.scope_of_work.max === 100) : jobsObj;
-    jobsObj = (partTime) ? jobsObj.filter(item => item.scope_of_work.max < 100) : jobsObj;
+    jobsObj = (region !== '') ? jobsObj.filter((item:any) => item.workplace_address.region === region) : jobsObj;
+    jobsObj = (driverReq) ? jobsObj.filter((item:any) => item.driving_license_required === true) : jobsObj;
+    jobsObj = (driverNReq) ? jobsObj.filter((item:any) => item.driving_license_required === false) : jobsObj;
+    jobsObj = (fullTime) ? jobsObj.filter((item:any) => item.scope_of_work.max === 100) : jobsObj;
+    jobsObj = (partTime) ? jobsObj.filter((item:any) => item.scope_of_work.max < 100) : jobsObj;
 
-    jobsObj = (lastDay) ? jobsObj.filter(item => item.publication_date > moment().subtract(1, 'days').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
-    jobsObj = (last3Days) ? jobsObj.filter(item => item.publication_date > moment().subtract(3, 'days').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
-    jobsObj = (lastWeek) ? jobsObj.filter(item => item.publication_date > moment().subtract(1, 'weeks').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
-    jobsObj = (last2Weeks) ? jobsObj.filter(item => item.publication_date > moment().subtract(2, 'weeks').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
-    jobsObj = (lastMonth) ? jobsObj.filter(item => item.publication_date > moment().subtract(1, 'months').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (lastDay) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(1, 'days').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (last3Days) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(3, 'days').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (lastWeek) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(1, 'weeks').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (last2Weeks) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(2, 'weeks').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (lastMonth) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(1, 'months').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
 
     
     //Pagination
@@ -304,7 +304,7 @@ export default function Jobs({jobs}) {
             <div style={{margin: '20px 40px'}}>
             {
                 jobsOnPage.map(
-                    (job, i) => (
+                    (job:any, i:number) => (
                         <Job key={i} job={job} onClick={() => {
                         handleClickOpen();
                         selectJob(job);
