@@ -41,15 +41,15 @@ export default function Job({job, onClick} : any) {
                     <Card.Title style={{maxHeight: '30px'}}>{job.occupation.label}</Card.Title>
                     <Card.Text style={{fontStyle: 'italic', height: '40px', alignContent: 'center', marginTop: '20px'}}>
                         <img src={job.logo_url} style={{maxHeight: '40px', maxWidth: '100px'}} />
-                        {(job.logo_url === null) ? job.employer.name : ''}
+                        {(job.logo_url === null) && job.employer.name}
                     </Card.Text>
                     <Card.Text style={{marginTop: '10px'}}>
                         <Tag style={{marginRight: '10px'}}>
                             {job.workplace_address.municipality == null ? 'Unspecified' : job.workplace_address.municipality}
                         </Tag>
                         <Tag style={{marginRight: '10px'}}>{job.scope_of_work.max === 100 ? 'Full Time' : 'Part Time'}</Tag>
-                        {mustHaveSwe === '' ? '' : <Tag style={{marginRight: '10px'}}>{mustHaveSwe}</Tag>}
-                        {mustHaveEng === '' ? '' : <Tag style={{marginRight: '10px'}}>{mustHaveEng}</Tag>}
+                        {mustHaveSwe !== '' && <Tag style={{marginRight: '10px'}}>{mustHaveSwe}</Tag>}
+                        {mustHaveEng !== '' && <Tag style={{marginRight: '10px'}}>{mustHaveEng}</Tag>}
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer style={{backgroundColor: '#73008a'}}>

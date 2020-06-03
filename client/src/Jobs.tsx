@@ -10,7 +10,6 @@ import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
 import {Dropdown, DropdownButton, Nav, Navbar} from 'react-bootstrap';
 
 
-
 const moment = require('moment');
 
 export default function Jobs({jobs} : any) {
@@ -62,7 +61,7 @@ export default function Jobs({jobs} : any) {
             }]
         }
     });
-    console.log(jobs);
+    
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -72,27 +71,13 @@ export default function Jobs({jobs} : any) {
     };
 
     const [region, setRegion] = useState('');
-    const [skane, setSkane] = useState(false);
-    const [gavleborg, setGavleborg] = useState(false);
-    const [ostergotland, setOstergotland] = useState(false);
-    const [unspecified, setUnspecified] = useState(false);
-    const [varmland, setVarmland] = useState(false);
-    const [gotaland, setGotaland] = useState(false);
-    const [stockholm, setStockholm] = useState(false);
-    const [driverReq, setDriverReq] = useState(false);
-    const [driverNReq, setDriverNReq] = useState(false);
-    const [fullTime, setFullTime] = useState(false);
-    const [partTime, setPartTime] = useState(false);
-    const [lastDay, setLastDay] = useState(false);
-    const [last3Days, setLast3Days] = useState(false);
-    const [lastWeek, setLastWeek] = useState(false);
-    const [last2Weeks, setLast2Weeks] = useState(false);
-    const [lastMonth, setLastMonth] = useState(false);
+    const [driver, setDriver] = useState('');
+    const [publish, setPublish] = useState('');
+    const [jobScope, setJobScope] = useState('');
     const [publishButton, setPublishButton] = useState('secondary');
     const [regionButton, setRegionButton] = useState('secondary');
     const [driverButton, setDriverButton] = useState('secondary');
     const [jobTypeButton, setjobTypeButton] = useState('secondary');
-    const [clearFilterButton, setClearFilterButton] = useState(true);
 
     function clearFilter() {
         clearRegion();
@@ -102,81 +87,58 @@ export default function Jobs({jobs} : any) {
     }
 
     function clearRegion() {
-        setSkane(false);
-        setGavleborg(false);
-        setOstergotland(false);
-        setUnspecified(false);
-        setVarmland(false);
-        setGotaland(false);
-        setStockholm(false);
         setRegion('');
         setRegionButton('secondary');
-        setClearFilterButton(true);
     }
 
     function clearDriver() {
-        setDriverReq(false);
-        setDriverNReq(false);
+        setDriver('');
         setDriverButton('secondary');
-        setClearFilterButton(true);
     }
 
     function clearPublish() {
-        setLastDay(false);
-        setLast3Days(false);
-        setLastWeek(false);
-        setLast2Weeks(false);
-        setLastMonth(false);
+        setPublish('');
         setPublishButton('secondary');
-        setClearFilterButton(true);
     }
 
     function clearJob() {
-        setFullTime(false);
-        setPartTime(false);
+        setJobScope('');
         setjobTypeButton('secondary');
-        setClearFilterButton(true);
     }
 
-    function changeRegionFilter(reg : string) {
-        clearRegion();
-        setRegion(reg);
+    function changeRegionFilter(e : any) {
+        setRegion(e.target.value);
         setRegionButton('primary');
-        setClearFilterButton(false);
     }
 
-    function changeDriverFilter() {
-        clearDriver();
+    function changeDriverFilter(e : any) {
+        setDriver(e.target.value);
         setDriverButton('primary');
-        setClearFilterButton(false);
     }
 
-    function changejobTypeFilter() {
-        clearJob();
+    function changejobTypeFilter(e : any) {
+        setJobScope(e.target.value);
         setjobTypeButton('primary');
-        setClearFilterButton(false);
     }
 
-    function changePublishFilter() {
-        clearPublish();
+    function changePublishFilter(e : any) {
+        setPublish(e.target.value);
         setPublishButton('primary');
-        setClearFilterButton(false);
     }
-    
 
     let jobsObj = jobs;
-
+    
     jobsObj = (region !== '') ? jobsObj.filter((item:any) => item.workplace_address.region === region) : jobsObj;
-    jobsObj = (driverReq) ? jobsObj.filter((item:any) => item.driving_license_required === true) : jobsObj;
-    jobsObj = (driverNReq) ? jobsObj.filter((item:any) => item.driving_license_required === false) : jobsObj;
-    jobsObj = (fullTime) ? jobsObj.filter((item:any) => item.scope_of_work.max === 100) : jobsObj;
-    jobsObj = (partTime) ? jobsObj.filter((item:any) => item.scope_of_work.max < 100) : jobsObj;
+    jobsObj = (driver === 'req') ? jobsObj.filter((item:any) => item.driving_license_required === true) : jobsObj;
+    jobsObj = (driver === 'not') ? jobsObj.filter((item:any) => item.driving_license_required === false) : jobsObj;
+    jobsObj = (jobScope === 'full') ? jobsObj.filter((item:any) => item.scope_of_work.max === 100) : jobsObj;
+    jobsObj = (jobScope === 'part') ? jobsObj.filter((item:any) => item.scope_of_work.max < 100) : jobsObj;
 
-    jobsObj = (lastDay) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(1, 'days').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
-    jobsObj = (last3Days) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(3, 'days').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
-    jobsObj = (lastWeek) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(1, 'weeks').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
-    jobsObj = (last2Weeks) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(2, 'weeks').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
-    jobsObj = (lastMonth) ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(1, 'months').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (publish === 'last') ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(1, 'days').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (publish === '3') ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(3, 'days').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (publish === 'week') ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(1, 'weeks').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (publish === '2week') ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(2, 'weeks').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
+    jobsObj = (publish === 'month') ? jobsObj.filter((item:any) => item.publication_date > moment().subtract(1, 'months').format('YYYY-MM-DDThh:mm:ss')) : jobsObj;
 
     
     //Pagination
@@ -207,77 +169,78 @@ export default function Jobs({jobs} : any) {
                     <Nav className="mr-auto">
 
                     <DropdownButton id="dropdown-basic-button" title="Region" variant={regionButton} style={{marginLeft: '200px'}}>
-                        <Dropdown.Item as="button" onClick={() => {changeRegionFilter('Gävleborgs län'); setGavleborg(true)}} active={gavleborg}>
+    
+                        <Dropdown.Item as="button" value='Gävleborgs län' onClick={e => changeRegionFilter(e)} active={region === 'Gävleborgs län'}>
                             Gävleborgs län
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changeRegionFilter('Östergötlands län'); setOstergotland(true)}} active={ostergotland}>
+                        <Dropdown.Item as="button" value='Östergötlands län' onClick={e => changeRegionFilter(e)} active={region === 'Östergötlands län'}>
                             Östergötlands län
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changeRegionFilter('Ospecificerad arbetsort'); setUnspecified(true)}} active={unspecified}>
+                        <Dropdown.Item as="button" value='Ospecificerad arbetsort' onClick={e => changeRegionFilter(e)} active={region === 'Ospecificerad arbetsort'}>
                             Unspecified
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changeRegionFilter('Värmlands län'); setVarmland(true)}} active={varmland}>
+                        <Dropdown.Item as="button" value='Värmlands län' onClick={e => changeRegionFilter(e)} active={region === 'Värmlands län'}>
                             Värmlands län
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changeRegionFilter('Västra Götalands län'); setGotaland(true)}} active={gotaland}>
+                        <Dropdown.Item as="button" value='Västra Götalands län' onClick={e => changeRegionFilter(e)} active={region === 'Västra Götalands län'}>
                             Västra Götalands län
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changeRegionFilter('Skåne län'); setSkane(true)}} active={skane}>
+                        <Dropdown.Item as="button" value='Skåne län' onClick={e => changeRegionFilter(e)} active={region === 'Skåne län'}>
                             Skåne län
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changeRegionFilter('Stockholms län'); setStockholm(true)}} active={stockholm}>
+                        <Dropdown.Item as="button" value='Stockholms län' onClick={e => changeRegionFilter(e)} active={region === 'Stockholms län'}>
                             Stockholms län
                         </Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item as="button" onClick={() => {clearRegion()}}>
+                        <Dropdown.Item as="button" onClick={() => clearRegion()}>
                             Clear Filter
                         </Dropdown.Item>
                     </DropdownButton>
 
                     <DropdownButton id="dropdown-basic-button" title="Published" variant={publishButton}>
-                        <Dropdown.Item as="button" onClick={() => {changePublishFilter(); setLastDay(true)}} active={lastDay}>
+                        <Dropdown.Item as="button" value='last' onClick={e => changePublishFilter(e)} active={publish === 'last'}>
                             Last Day
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changePublishFilter(); setLast3Days(true)}} active={last3Days}>
+                        <Dropdown.Item as="button" value='3' onClick={e => changePublishFilter(e)} active={publish === '3'}>
                             Last 3 Days
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changePublishFilter(); setLastWeek(true)}} active={lastWeek}>
+                        <Dropdown.Item as="button" value='week' onClick={e => changePublishFilter(e)} active={publish === 'week'}>
                             Last Week
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changePublishFilter(); setLast2Weeks(true)}} active={last2Weeks}>
+                        <Dropdown.Item as="button" value='2week' onClick={e => changePublishFilter(e)} active={publish === '2week'}>
                             Last 2 Weeks
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changePublishFilter(); setLastMonth(true)}} active={lastMonth}>
+                        <Dropdown.Item as="button" value='month' onClick={e => changePublishFilter(e)} active={publish === 'month'}>
                             Last Month
                         </Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item as="button" onClick={() => {clearPublish()}}>
+                        <Dropdown.Item as="button" onClick={() => clearPublish()}>
                             Clear Filter
                         </Dropdown.Item>
                     </DropdownButton>
 
                     <DropdownButton id="dropdown-basic-button" title="Drivers Licence" variant={driverButton}>
-                        <Dropdown.Item as="button" onClick={() => {changeDriverFilter(); setDriverReq(true)}} active={driverReq}>
+                        <Dropdown.Item as="button" value='req' onClick={e => changeDriverFilter(e)} active={driver === 'req'}>
                             Drivers Licence Required
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changeDriverFilter(); setDriverNReq(true)}} active={driverNReq}>
+                        <Dropdown.Item as="button" value='not' onClick={e => changeDriverFilter(e)} active={driver === 'not'}>
                             Drivers Licence Not Required
                         </Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item as="button" onClick={() => {clearDriver()}}>
+                        <Dropdown.Item as="button" onClick={() => clearDriver()}>
                             Clear Filter
                         </Dropdown.Item>
                     </DropdownButton>
 
                     <DropdownButton id="dropdown-basic-button" title="Job Type" variant={jobTypeButton}>
-                        <Dropdown.Item as="button" onClick={() => {changejobTypeFilter(); setFullTime(true)}} active={fullTime}>
+                        <Dropdown.Item as="button" value='full' onClick={e => changejobTypeFilter(e)} active={jobScope === 'full'}>
                             Full Time
                         </Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={() => {changejobTypeFilter(); setPartTime(true)}} active={partTime}>
+                        <Dropdown.Item as="button" value='part' onClick={e => changejobTypeFilter(e)} active={jobScope === 'part'}>
                             Part Time
                         </Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item as="button" onClick={() => {clearJob()}}>
+                        <Dropdown.Item as="button" onClick={() => clearJob()}>
                             Clear Filter
                         </Dropdown.Item>
                     </DropdownButton>
@@ -287,7 +250,7 @@ export default function Jobs({jobs} : any) {
                         style={{marginLeft: '30px'}} 
                         variant="contained" 
                         color="default"
-                        disabled={clearFilterButton}
+                        disabled={(region !== '' || driver !== '' || publish !== '' || jobScope !== '') ? false : true}
                         >
                         Clear Filters
                     </Button>
