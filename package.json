@@ -23,7 +23,7 @@
     "node-fetch": "^2.6.0",
     "react-bootstrap": "^1.0.1",
     "react-router-dom": "^5.2.0",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "typescript": "^3.9.3",
     "whatwg-fetch": "^2.0.4"
   }
