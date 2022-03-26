@@ -18,7 +18,7 @@
     "acorn": "^7.1.1",
     "cron": "^1.8.2",
     "express": "^4.17.1",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",
     "react-bootstrap": "^1.0.1",
